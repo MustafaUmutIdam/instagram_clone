@@ -12,19 +12,44 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  final FeedViewModel feedVM = FeedViewModel(); // ViewModel
+  final FeedViewModel feedVM = FeedViewModel();
+  final ResponsiveService resp = ResponsiveService();
 
   @override
   void initState() {
     super.initState();
-    feedVM.loadPosts(); // dummy / ram veri
-    feedVM.loadStories();
+
+    // ViewModel'deki değişiklikleri dinle
+    feedVM.addListener(_onViewModelChanged);
+
+    // Verileri yükle
+    _loadData();
   }
-  final ResponsiveService resp = ResponsiveService();
+
+  @override
+  void dispose() {
+    feedVM.removeListener(_onViewModelChanged);
+    feedVM.dispose();
+    super.dispose();
+  }
+
+  void _onViewModelChanged() {
+    // ViewModel değiştiğinde setState çağır
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  Future<void> _loadData() async {
+    await feedVM.loadAllData();
+  }
+
+  Future<void> _onRefresh() async {
+    await feedVM.refreshPosts();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -39,19 +64,49 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border, color: Colors.white,size: resp.width(0.08) ),
+            icon: Icon(Icons.favorite_border, color: Colors.white, size: resp.width(0.08)),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.messenger_outline_rounded, color: Colors.white,size: resp.width(0.08)),
+            icon: Icon(Icons.messenger_outline_rounded, color: Colors.white, size: resp.width(0.08)),
             onPressed: () {},
           ),
         ],
       ),
-      body: ListView(
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    // Hata durumu
+    if (feedVM.error != null) {
+      return _buildErrorWidget();
+    }
+
+    // İlk yükleme durumu
+    if (feedVM.isLoading && feedVM.posts.isEmpty) {
+      return _buildLoadingWidget();
+    }
+
+    // Normal durum - veriler yüklü
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      child: ListView(
         children: [
           // Hikayeler kısmı
           StoryBar(stories: feedVM.stories),
+
+          // Loading indicator (refresh sırasında)
+          if (feedVM.isLoading)
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              alignment: Alignment.center,
+              child: const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
 
           // Gönderiler
           ...feedVM.posts.map((post) => FeedPost(
@@ -63,6 +118,48 @@ class _FeedScreenState extends State<FeedScreen> {
             commentCount: post.commentCount,
             repostCount: post.repostCount,
           )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingWidget() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(height: 16),
+          Text(
+            'Gönderiler yükleniyor...',
+            style: TextStyle(color: Colors.white70),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.error_outline,
+            size: 64,
+            color: Colors.red,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            feedVM.error!,
+            style: const TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _loadData,
+            child: const Text('Tekrar Dene'),
+          ),
         ],
       ),
     );

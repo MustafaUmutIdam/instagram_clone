@@ -1,8 +1,28 @@
 import 'package:instagram_clone/data/models/Post.dart';
 import 'package:instagram_clone/data/models/story.dart';
+import 'package:instagram_clone/data/datasources/api_service.dart';
 
 class YummyDataSource {
+  final ApiService _apiService = ApiService();
+
+  // API'den gerçek veri çek
+  Future<List<Post>> getPostsFromApi() async {
+    try {
+      return await _apiService.getPosts();
+    } catch (e) {
+      // Hata durumunda fallback veri döndür
+      print('API hatası: $e');
+      return _getFallbackPosts();
+    }
+  }
+
+  // Eski mock veri metodu (fallback olarak kullanılabilir)
   List<Post> getPosts() {
+    return _getFallbackPosts();
+  }
+
+  // Fallback/Mock veri
+  List<Post> _getFallbackPosts() {
     return List.generate(5, (index) => Post(
       profileName: 'User$index',
       postDetail: 'Gönderi detay metni $index',
@@ -17,6 +37,7 @@ class YummyDataSource {
     ));
   }
 
+  // Stories için mock veri (değişiklik yok)
   List<Story> getStories() {
     return [
       Story(
