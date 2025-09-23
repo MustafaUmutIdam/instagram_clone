@@ -4,7 +4,7 @@ import 'package:instagram_clone/data/models/story.dart';
 
 
 class Repository {
-  final YummyDataSource _dataSource = YummyDataSource();
+  final DummyDataSource _dataSource = DummyDataSource();
 
   // Asenkron post çekme
   Future<List<Post>> fetchPosts() async {
@@ -16,8 +16,11 @@ class Repository {
     }
   }
 
-  // Stories için mock veri (değişiklik yok)
-  List<Story> fetchStories() {
-    return _dataSource.getStories();
+  Future<List<Story>> fetchStories() async {
+    try {
+      return await _dataSource.getStoriesFromApi();
+    } catch (e) {
+      return _dataSource.getStories();
+    }
   }
 }

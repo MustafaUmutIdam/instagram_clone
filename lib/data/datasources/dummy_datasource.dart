@@ -2,7 +2,7 @@ import 'package:instagram_clone/data/models/Post.dart';
 import 'package:instagram_clone/data/models/story.dart';
 import 'package:instagram_clone/data/datasources/api_service.dart';
 
-class YummyDataSource {
+class DummyDataSource {
   final ApiService _apiService = ApiService();
 
   // API'den gerçek veri çek
@@ -16,9 +16,22 @@ class YummyDataSource {
     }
   }
 
+  Future<List<Story>> getStoriesFromApi() async {
+    try {
+      return await _apiService.getStories();
+    } catch (e) {
+      print('Stories API hatası: $e');
+      return _getFallbackStories();
+    }
+  }
+
   // Eski mock veri metodu (fallback olarak kullanılabilir)
   List<Post> getPosts() {
     return _getFallbackPosts();
+  }
+
+  List<Story> getStories() {
+    return _getFallbackStories();
   }
 
   // Fallback/Mock veri
@@ -37,16 +50,17 @@ class YummyDataSource {
     ));
   }
 
-  // Stories için mock veri (değişiklik yok)
-  List<Story> getStories() {
+  List<Story> _getFallbackStories() {
     return [
       Story(
+        id: 0,
         profileName: "Sen",
         profileImageUrl: "https://picsum.photos/100/100?random=50",
         isMine: true,
         hasStory: false,
       ),
-      ...List.generate(8, (i) => Story(
+      ...List.generate(5, (i) => Story(
+        id: i + 1,
         profileName: "User$i",
         profileImageUrl: "https://picsum.photos/100/100?random=${i+60}",
       )),
