@@ -33,14 +33,12 @@ class FeedViewModel extends ChangeNotifier {
     }
   }
 
-  // Stories yükleme metodu (değişiklik yok)
-  void loadStories() {
+  Future<void> loadStories() async {
     try {
-      stories = repository.fetchStories();
-      notifyListeners(); // UI'yi güncelle
+      stories = await repository.fetchStories();
+      notifyListeners();
     } catch (e) {
       _setError('Stories yüklenemedi: $e');
-      debugPrint('Error loading stories: $e');
     }
   }
 
