@@ -1,4 +1,4 @@
-import 'package:instagram_clone/data/datasources/yummy_datasource.dart';
+import 'package:instagram_clone/data/datasources/dummy_datasource.dart';
 import 'package:instagram_clone/data/models/Post.dart';
 import 'package:instagram_clone/data/models/story.dart';
 
