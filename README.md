@@ -1,16 +1,10 @@
-# instagram_clone
+Instagram uygulamasının kopyasını yaparak ; 
+- Flutter ile mobil uygulama yapımında gelişmek
+- MVVM mimarisi ile katmanlı uygulama yapılarında gelişmek
+- Gelecekte BloC veya provider kullanımında gelişmek
+- Uygulama için .Net ile kendi Backendimizi geliştirip bu sayede bütün broje için tüm katmanları detaylıca öğrenmek
+  hedeflenmmiştir.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  Uygulamanın .Net9 MVC WepApi reposu : https://github.com/MustafaUmutIdam/InstagramCloneBackend
+------------------------------------------------------------------------------------------------------
+WepApi uygulamasını bilgisayarımızde çalıştırdıktan sonra localdeki istekleri Flutter uygulaması ile gözlemleyip proje ve verilere uygun tasarımlar yapılmıştır.  
