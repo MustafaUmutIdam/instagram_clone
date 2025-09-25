@@ -1,5 +1,6 @@
 import 'package:instagram_clone/data/datasources/dummy_datasource.dart';
 import 'package:instagram_clone/data/models/Post.dart';
+import 'package:instagram_clone/data/models/profile.dart';
 import 'package:instagram_clone/data/models/story.dart';
 
 
@@ -22,5 +23,9 @@ class Repository {
     } catch (e) {
       return _dataSource.getStories();
     }
+  }
+
+  Future<Profile> fetchProfile(int id) async {
+    return await _dataSource.getProfileById(id);
   }
 }

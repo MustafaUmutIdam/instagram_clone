@@ -16,54 +16,73 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [
-    FeedScreen(),
-    SearchScreen(),
-    PostScreen(),
-    ReelsScreen(),
-    ProfileScreen(),
-  ];
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      const FeedScreen(),
+      const SearchScreen(),
+      const PostScreen(),
+      const ReelsScreen(),
+      ProfileScreen(profileId: 1),
+    ];
+  }
 
   void onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
-  final ResponsiveService resp = ResponsiveService();
+
   @override
   Widget build(BuildContext context) {
+    // ResponsiveService'i context ile initialize et
+    final resp = ResponsiveService()..init(context);
+
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: onItemTapped,
         backgroundColor: Colors.black,
-        indicatorColor: Colors.cyan.withOpacity(0.2), // seçili item arka planı
-        surfaceTintColor: Colors.transparent, // M3 gölgeleri kapatır
+        indicatorColor: Colors.cyan.withOpacity(0.2),
+        surfaceTintColor: Colors.transparent,
         destinations: [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: Colors.white,size: resp.width(0.07),),
-            selectedIcon: Icon(Icons.home, color: Colors.cyan,size: resp.width(0.07)),
+            icon: Icon(Icons.home_outlined,
+                color: Colors.white, size: resp.width(0.07)),
+            selectedIcon: Icon(Icons.home,
+                color: Colors.cyan, size: resp.width(0.07)),
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.search, color: Colors.white,size: resp.width(0.07)),
-            selectedIcon: Icon(Icons.search, color: Colors.cyan,size: resp.width(0.07)),
+            icon: Icon(Icons.search,
+                color: Colors.white, size: resp.width(0.07)),
+            selectedIcon: Icon(Icons.search,
+                color: Colors.cyan, size: resp.width(0.07)),
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.add_box_outlined, color: Colors.white,size: resp.width(0.07)),
-            selectedIcon: Icon(Icons.add_box, color: Colors.cyan,size: resp.width(0.07)),
+            icon: Icon(Icons.add_box_outlined,
+                color: Colors.white, size: resp.width(0.07)),
+            selectedIcon: Icon(Icons.add_box,
+                color: Colors.cyan, size: resp.width(0.07)),
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.slow_motion_video_rounded, color: Colors.white,size: resp.width(0.07)),
-            selectedIcon: Icon(Icons.slow_motion_video, color: Colors.cyan,size: resp.width(0.07)),
+            icon: Icon(Icons.slow_motion_video_rounded,
+                color: Colors.white, size: resp.width(0.07)),
+            selectedIcon: Icon(Icons.slow_motion_video,
+                color: Colors.cyan, size: resp.width(0.07)),
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded, color: Colors.white,size: resp.width(0.07)),
-            selectedIcon: Icon(Icons.person, color: Colors.cyan,size: resp.width(0.07)),
+            icon: Icon(Icons.person_outline_rounded,
+                color: Colors.white, size: resp.width(0.07)),
+            selectedIcon: Icon(Icons.person,
+                color: Colors.cyan, size: resp.width(0.07)),
             label: '',
           ),
         ],

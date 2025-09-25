@@ -1,4 +1,5 @@
 import 'package:instagram_clone/data/models/Post.dart';
+import 'package:instagram_clone/data/models/profile.dart';
 import 'package:instagram_clone/data/models/story.dart';
 import 'package:instagram_clone/data/datasources/api_service.dart';
 
@@ -65,5 +66,14 @@ class DummyDataSource {
         profileImageUrl: "https://picsum.photos/100/100?random=${i+60}",
       )),
     ];
+  }
+
+  Future<Profile> getProfileById(int id) async {
+    try {
+      return await _apiService.getProfileById(id);
+    } catch (e) {
+      print('Profile API hatası: $e');
+      rethrow;
+    }
   }
 }

@@ -9,6 +9,13 @@ class ResponsiveService {
   late double screenWidth;
   late double screenHeight;
 
+  /// Context ile initialize edilmeli
+  void init(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    screenWidth = size.width;
+    screenHeight = size.height;
+  }
+
   // Oranlı hesaplamalar
   double width(double ratio) => screenWidth * ratio;
   double height(double ratio) => screenHeight * ratio;
