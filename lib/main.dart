@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/data/repositories/repository.dart';
+import 'package:instagram_clone/logic/profile/profile_bloc.dart';
 import 'package:instagram_clone/ui/screens/home_page.dart';
-import 'package:instagram_clone/ui/helpers/responsive_service.dart'; // 👈 ekledik
 
 void main() {
-  runApp(const MyApp());
+  final repository = Repository();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+       // BlocProvider(create: (_) => PostsBloc(repository)..add(LoadPosts())),
+       //BlocProvider(create: (_) => StoriesBloc(repository)..add(LoadStories())),
+        BlocProvider(create: (_) => ProfileBloc(repository)), // event UI’dan tetiklenecek
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,29 +24,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return OrientationBuilder(
-          builder: (context, orientation) {
-            final mediaQuery = MediaQuery.of(context);
-
-            // ekran boyutlarını singleton’a kaydet
-            final responsive = ResponsiveService();
-            responsive.screenWidth = mediaQuery.size.width;
-            responsive.screenHeight = mediaQuery.size.height;
-
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-                useMaterial3: true,
-              ),
-              home: const HomePage(),
-            );
-          },
-        );
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Instagram Clone',
+      home: const HomePage(),
     );
   }
 }

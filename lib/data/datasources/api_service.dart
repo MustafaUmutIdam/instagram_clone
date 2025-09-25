@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:instagram_clone/data/models/Post.dart';
+import 'package:instagram_clone/data/models/profile.dart';
 import 'package:instagram_clone/data/models/story.dart';
 
 class ApiService {
@@ -46,6 +47,19 @@ class ApiService {
       }
     } catch (e) {
       throw Exception('Stories API çağrısında hata: $e');
+    }
+  }
+
+  Future<Profile> getProfileById(int id) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/profiles/$id'),
+      headers: {'Accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      return Profile.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Profile yüklenemedi: ${response.statusCode}');
     }
   }
 }
