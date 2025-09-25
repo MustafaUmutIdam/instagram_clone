@@ -1,7 +1,7 @@
 Instagram uygulamasının kopyasını yaparak ; 
 - Flutter ile mobil uygulama yapımında gelişmek
 - MVVM mimarisi ile katmanlı uygulama yapılarında gelişmek
-- Gelecekte BloC veya provider kullanımında gelişmek
+- BloC veya provider yapılarının kullanımında gelişmek
 - Uygulama için .Net ile kendi Backendimizi geliştirip bu sayede bütün broje için tüm katmanları detaylıca öğrenmek
   hedeflenmmiştir.
 
