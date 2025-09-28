@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/data/models/profile.dart';
 import 'package:instagram_clone/ui/helpers/responsive_service.dart';
+import 'package:instagram_clone/ui/screens/edit_profile_screen.dart';
 import '../../../logic/profile/profile_bloc.dart';
 import '../../../logic/profile/profile_event.dart';
 import '../../../logic/profile/profile_state.dart';
@@ -26,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
             return Center(child: Text(state.message, style: const TextStyle(color: Colors.red)));
           } else if (state is ProfileLoaded) {
             final p = state.profile;
-            return _buildProfileView(p);
+            return _buildProfileView(context ,p);
           }
           return const SizedBox.shrink();
         },
@@ -34,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileView(profile) {
+  Widget _buildProfileView(BuildContext context, Profile profile) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -44,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
             titleSpacing: 0,
             title: Row(
               children: [
-                const Icon(Icons.lock, color: Colors.white),
+                const Icon(Icons.lock_outline_rounded, color: Colors.white),
                 const SizedBox(width: 8),
                 Text(profile.username, style: const TextStyle(color: Colors.white)),
                 const Icon(Icons.keyboard_arrow_down, color: Colors.white),
@@ -53,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
             actions: const [
               Icon(Icons.add_box_outlined, color: Colors.white),
               SizedBox(width: 16),
-              Icon(Icons.menu, color: Colors.white),
+              Icon(Icons.menu_outlined, color: Colors.white),
               SizedBox(width: 8),
             ],
           ),
@@ -77,7 +79,27 @@ class ProfileScreen extends StatelessWidget {
                         backgroundColor: Colors.blue,
                         child: Icon(Icons.add, size: 16, color: Colors.white),
                       ),
-                    )
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            profile.profileNote,
+                            style: const TextStyle(color: Colors.grey, fontSize: 10),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 Expanded(
@@ -120,7 +142,22 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => BlocProvider.value(
+                            value: context.read<ProfileBloc>(),
+                            child: EditProfileScreen(profile: profile),
+                          ),
+                        ),
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.grey[850], // gri arka plan
+                      side: const BorderSide(color: Colors.transparent), // kenarlık rengi
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
                     child: const Text("Profili Düzenle", style: TextStyle(color: Colors.white)),
                   ),
                 ),
@@ -128,13 +165,23 @@ class ProfileScreen extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.grey[850], // gri arka plan
+                      side: const BorderSide(color: Colors.transparent), // kenarlık rengi
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
                     child: const Text("Profili Paylaş", style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 const SizedBox(width: 8),
                 OutlinedButton(
                   onPressed: () {},
-                  child: const Icon(Icons.person_add, color: Colors.white),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.grey[850], // gri arka plan
+                    side: const BorderSide(color: Colors.transparent), // kenarlık rengi
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  child: const Icon(Icons.person_add_alt_1_outlined, color: Colors.white),
                 ),
               ],
             ),

@@ -76,4 +76,14 @@ class DummyDataSource {
       rethrow;
     }
   }
+
+  Future<Profile> updateProfile(Profile profile) async {
+    try {
+      return await _apiService.updateProfile(profile);
+    } catch (e) {
+      print('Update profile API hatası: $e');
+      rethrow;
+    }
+  }
+
 }

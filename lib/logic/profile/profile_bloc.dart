@@ -16,5 +16,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileError(e.toString()));
       }
     });
+
+    on<UpdateProfile>((event, emit) async {
+      emit(ProfileUpdating());
+      try {
+        final updated = await repository.updateProfile(event.profile);
+        emit(ProfileUpdated(updated));
+        emit(ProfileLoaded(updated)); // tekrar ekrana yükle
+      } catch (e) {
+        emit(ProfileError("Profil güncellenemedi: $e"));
+      }
+    });
   }
 }

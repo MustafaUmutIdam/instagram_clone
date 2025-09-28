@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:instagram_clone/data/models/profile.dart';
 
@@ -14,6 +13,16 @@ class ProfileLoading extends ProfileState {}
 class ProfileLoaded extends ProfileState {
   final Profile profile;
   ProfileLoaded(this.profile);
+
+  @override
+  List<Object?> get props => [profile];
+}
+
+class ProfileUpdating extends ProfileState {}
+
+class ProfileUpdated extends ProfileState {
+  final Profile profile;
+  ProfileUpdated(this.profile);
 
   @override
   List<Object?> get props => [profile];
