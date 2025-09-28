@@ -34,4 +34,42 @@ class Profile {
       profileNote: json['profileNote'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'username': username,
+      'fullName': fullName,
+      'profileImageUrl': profileImageUrl,
+      'postCount': postCount,
+      'followersCount': followersCount,
+      'followingCount': followingCount,
+      'bio': bio,
+      'profileNote': profileNote,
+    };
+  }
+
+  Profile copyWith({
+    int? id,
+    String? username,
+    String? fullName,
+    String? profileImageUrl,
+    int? postCount,
+    int? followersCount,
+    int? followingCount,
+    String? bio,
+    String? profileNote,
+  }) {
+    return Profile(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      fullName: fullName ?? this.fullName,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      postCount: postCount ?? this.postCount,
+      followersCount: followersCount ?? this.followersCount,
+      followingCount: followingCount ?? this.followingCount,
+      bio: bio ?? this.bio,
+      profileNote: profileNote ?? this.profileNote,
+    );
+  }
 }

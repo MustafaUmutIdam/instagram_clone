@@ -28,4 +28,9 @@ class Repository {
   Future<Profile> fetchProfile(int id) async {
     return await _dataSource.getProfileById(id);
   }
+
+  Future<Profile> updateProfile(Profile profile) async {
+    return await _dataSource.updateProfile(profile);
+  }
+
 }

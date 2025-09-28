@@ -62,4 +62,22 @@ class ApiService {
       throw Exception('Profile yüklenemedi: ${response.statusCode}');
     }
   }
+
+  Future<Profile> updateProfile(Profile profile) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/profiles/${profile.id}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: json.encode(profile.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      return Profile.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Profile güncellenemedi: ${response.statusCode}');
+    }
+  }
+
 }
