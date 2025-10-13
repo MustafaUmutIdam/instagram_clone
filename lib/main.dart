@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/data/repositories/repository.dart';
+import 'package:instagram_clone/logic/my_post/my_post_bloc.dart';
+import 'package:instagram_clone/logic/post/post_bloc.dart';
 import 'package:instagram_clone/logic/profile/profile_bloc.dart';
 import 'package:instagram_clone/ui/screens/home_page.dart';
 
@@ -13,6 +15,8 @@ void main() {
        // BlocProvider(create: (_) => PostsBloc(repository)..add(LoadPosts())),
        //BlocProvider(create: (_) => StoriesBloc(repository)..add(LoadStories())),
         BlocProvider(create: (_) => ProfileBloc(repository)), // event UI’dan tetiklenecek
+        BlocProvider(create: (_) => PostBloc(repository)),
+        BlocProvider(create: (_) => MyPostBloc(repository)),
       ],
       child: const MyApp(),
     ),

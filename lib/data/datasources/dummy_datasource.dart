@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:instagram_clone/data/models/Post.dart';
+import 'package:instagram_clone/data/models/mypost.dart';
 import 'package:instagram_clone/data/models/profile.dart';
 import 'package:instagram_clone/data/models/story.dart';
 import 'package:instagram_clone/data/datasources/api_service.dart';
@@ -82,6 +85,33 @@ class DummyDataSource {
       return await _apiService.updateProfile(profile);
     } catch (e) {
       print('Update profile API hatası: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<String>> uploadImages(List<File> files) async {
+    try {
+      return await _apiService.uploadImages(files);
+    } catch (e) {
+      print('UploadImages API hatası: $e');
+      rethrow;
+    }
+  }
+
+  Future<MyPost> createMyPost(MyPost post) async {
+    try {
+      return await _apiService.createMyPost(post);
+    } catch (e) {
+      print('CreateMyPost API hatası: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<MyPost>> fetchMyPosts() async {
+    try {
+      return await _apiService.fetchMyPosts();
+    } catch (e) {
+      print('FetchMyPosts API hatası: $e');
       rethrow;
     }
   }

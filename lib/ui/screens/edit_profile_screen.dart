@@ -73,7 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.cyan,
                   ),
-                  child: const Text("Kaydet"),
+                  child: const Text("Kaydet",style: TextStyle(color: Colors.white),),
                 )
               ],
             ),
