@@ -130,4 +130,14 @@ class ApiService {
     }
   }
 
+  Future<List<MyPost>> fetchMyPosts() async {
+    final response = await http.get(Uri.parse('$baseUrl/api/MyPosts'));
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((json) => MyPost.fromJson(json)).toList();
+    } else {
+      throw Exception("MyPosts alınamadı");
+    }
+  }
+
 }

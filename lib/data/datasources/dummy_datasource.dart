@@ -107,4 +107,13 @@ class DummyDataSource {
     }
   }
 
+  Future<List<MyPost>> fetchMyPosts() async {
+    try {
+      return await _apiService.fetchMyPosts();
+    } catch (e) {
+      print('FetchMyPosts API hatası: $e');
+      rethrow;
+    }
+  }
+
 }

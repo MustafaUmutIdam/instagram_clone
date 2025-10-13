@@ -213,7 +213,9 @@ class _PostScreenState extends State<PostScreen> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => _onSave(profile),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[800]),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.cyan,
+                    ),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: Text('Kaydet', style: TextStyle(color: Colors.white)),

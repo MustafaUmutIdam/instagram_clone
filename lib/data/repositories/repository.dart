@@ -43,4 +43,9 @@ class Repository {
   Future<MyPost> createMyPost(MyPost post) async {
     return await _dataSource.createMyPost(post);
   }
+
+  Future<List<MyPost>> getPostsByProfileId(int profileId) async {
+    final posts = await _dataSource.fetchMyPosts();
+    return posts.where((p) => p.profileId == profileId).toList();
+  }
 }
