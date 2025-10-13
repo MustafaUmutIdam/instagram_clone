@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:instagram_clone/data/datasources/dummy_datasource.dart';
 import 'package:instagram_clone/data/models/Post.dart';
+import 'package:instagram_clone/data/models/mypost.dart';
 import 'package:instagram_clone/data/models/profile.dart';
 import 'package:instagram_clone/data/models/story.dart';
 
@@ -33,4 +36,11 @@ class Repository {
     return await _dataSource.updateProfile(profile);
   }
 
+  Future<List<String>> uploadImages(List<File> files) async {
+    return await _dataSource.uploadImages(files);
+  }
+
+  Future<MyPost> createMyPost(MyPost post) async {
+    return await _dataSource.createMyPost(post);
+  }
 }
